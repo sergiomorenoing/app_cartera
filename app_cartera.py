@@ -9,13 +9,13 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Demo Telco: Cartera - Pago o Mora", layout="wide")
 
-st.title("💰 Demo IA Telco — Predicción de Pago o Mora (Cartera)")
+st.title(" Demo IA Telco — Predicción de Pago o Mora (Cartera)")
 st.markdown("""
 Este demo muestra cómo técnicas de **Machine Learning avanzado (XGBoost)** ayudan a anticipar el riesgo de mora, clasificar clientes según probabilidad de pago y priorizar la gestión de cobranza.
 """)
 
 # --- 1. SIMULACIÓN DE DATOS (CON MESES) ---
-with st.expander("1️⃣ ¿Cómo se crean los datos del demo? (Simulación realista)"):
+with st.expander("1️ ¿Cómo se crean los datos del demo? (Simulación realista)"):
     st.info(
         "Simulamos una base de clientes con variables clave de cartera: días de mora, llamadas de cobranza, monto pendiente, promesas de pago anteriores y score de crédito, generados para varios meses para analizar tendencias."
     )
@@ -59,7 +59,7 @@ for mes in meses:
 data = data_full[data_full['Mes'] == meses[-1]].drop(columns=['Mes', 'ClienteID'])
 
 # --- 2. PREPROCESAMIENTO ---
-with st.expander("2️⃣ ¿Cómo se preparan los datos?"):
+with st.expander("2️ ¿Cómo se preparan los datos?"):
     st.info(
         "Los datos se dividen en entrenamiento y prueba. Se usan para ajustar y validar el modelo XGBoost, que es altamente eficaz para clasificación de riesgo."
     )
@@ -69,7 +69,7 @@ y = data['Pago']
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.25, random_state=42)
 
 # --- 3. ENTRENAMIENTO DEL MODELO (XGBoost) ---
-with st.expander("3️⃣ ¿Qué modelo se usa y por qué?"):
+with st.expander("3️ ¿Qué modelo se usa y por qué?"):
     st.info(
         "Se utiliza **XGBoost**, un modelo avanzado que combina muchos árboles de decisión para predecir la probabilidad de pago. Es robusto, preciso y muy usado en banca y telecomunicaciones."
     )
@@ -83,7 +83,7 @@ roc = roc_auc_score(y_test, y_pred_proba)
 cm = confusion_matrix(y_test, (y_pred_proba>0.5).astype(int))
 
 # --- 4. CURVA ROC/AUC Y MATRIZ DE CONFUSIÓN ---
-with st.expander("4️⃣ ¿Qué tan bueno es el modelo? (Curva ROC/AUC)"):
+with st.expander("4️ ¿Qué tan bueno es el modelo? (Curva ROC/AUC)"):
     st.info(
         "La **curva ROC** muestra la capacidad del modelo para distinguir entre quienes pagarán y quienes no. El **AUC** cercano a 1 indica excelente discriminación."
     )
@@ -110,7 +110,7 @@ st.markdown("""
 """)
 
 # --- 5. IMPORTANCIA DE VARIABLES ---
-with st.expander("5️⃣ ¿Qué variables son más importantes para predecir el pago?"):
+with st.expander("5️ ¿Qué variables son más importantes para predecir el pago?"):
     st.info(
         "El modelo identifica los factores de mayor impacto en la probabilidad de pago (por ejemplo: score de crédito, días de mora, promesas incumplidas)."
     )
@@ -125,7 +125,7 @@ st.markdown("""
 """)
 
 # ----------- G1. CASCADA DE IMPACTO DE VARIABLES (SIMPLE EXPLICABILIDAD) -----------
-with st.expander("🔍 ¿Por qué el modelo clasifica a un cliente como 'alto riesgo'? (Cascada de variables)"):
+with st.expander(" ¿Por qué el modelo clasifica a un cliente como 'alto riesgo'? (Cascada de variables)"):
     st.info("Muestra cómo cada variable afecta la predicción final para un cliente seleccionado.")
     data_test = X_test.copy()
     data_test['Prob_Pago'] = y_pred_proba
@@ -201,7 +201,7 @@ with st.expander("🌡️ ¿Dónde se concentran los riesgos más altos? (Mapa d
     """)
 
 # --- 6. CLASIFICACIÓN DE CLIENTES POR RIESGO (Tabla y Histograma) ---
-with st.expander("6️⃣ ¿Cómo se clasifican los clientes según riesgo de pago?"):
+with st.expander("6️ ¿Cómo se clasifican los clientes según riesgo de pago?"):
     st.info(
         "Se clasifica a los clientes en tres grupos según la probabilidad de pago predicha: "
         "**Pago seguro** (>80%), **Pago incierto** (50-80%), **Alto riesgo** (<50%)."
@@ -217,7 +217,7 @@ with st.expander("6️⃣ ¿Cómo se clasifican los clientes según riesgo de pa
     """)
 
 # --- 7. VISUALIZACIÓN DE COHORTES DE PAGO ---
-with st.expander("7️⃣ ¿Cómo evolucionan los pagos por cohortes?"):
+with st.expander("7️ ¿Cómo evolucionan los pagos por cohortes?"):
     st.info(
         "Aquí puedes analizar el comportamiento de pago según grupos de clientes con características similares (por ejemplo, por días de mora o score de crédito)."
     )
@@ -233,7 +233,7 @@ with st.expander("7️⃣ ¿Cómo evolucionan los pagos por cohortes?"):
     """)
 
 # --- 8. ANIMACIÓN: TENDENCIA MENSUAL DE COHORTES ---
-with st.expander("📈 ¿Cómo evoluciona el cumplimiento de pago por cohortes y meses? (Animación)"):
+with st.expander(" ¿Cómo evoluciona el cumplimiento de pago por cohortes y meses? (Animación)"):
     st.info("Visualiza la tendencia mensual del % de pagos cumplidos en distintas cohortes de días de mora.")
 
     data_full['Cohorte_mora'] = pd.cut(data_full['Dias_mora'], bins=[-1,7,15,30,60], labels=["0-7","8-15","16-30","31-60"])
@@ -257,7 +257,7 @@ with st.expander("📈 ¿Cómo evoluciona el cumplimiento de pago por cohortes y
     """)
 
 # --- 9. BONUS: INTENCIÓN DE PAGO CON NLP (Simulación Deep Learning) ---
-with st.expander("9️⃣ ¿Qué dicen las transcripciones de llamadas? (Simulación Deep Learning NLP)"):
+with st.expander("9️ ¿Qué dicen las transcripciones de llamadas? (Simulación Deep Learning NLP)"):
     st.info(
         "Simulamos el uso de modelos NLP para detectar la 'intención de pago' en las transcripciones de llamadas de cobranza."
     )
